@@ -67,6 +67,24 @@ class Rubic:
         return newFace
 
 
+    #Rotates the entire cube clockwise on R
+    def x(self):
+        self.R = rFace(self.R)
+        self.L = rFacei(self.L)
+        temp = rFace(rFace(self.U))
+        self.U = self.F
+        self.F = self.D
+        self.D = self.B
+        self.B = temp
+
+
+    #Rotates the entire cube counter-clockwise on R
+    def xi(self):
+        self.x()
+        self.x()
+        self.x()
+
+
 
     #Without i: clockwise
     #With i: counter-clockwise
