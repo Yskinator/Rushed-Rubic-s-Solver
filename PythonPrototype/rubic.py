@@ -45,17 +45,37 @@ class Rubic:
 
         return s
 
+
+
+    #Rotates a face of the cube - and only
+    #the face! - 90 degrees clockwise.
+    def rFace(face):
+        newFace = [["" for x in range(3)] for y in range(3)]
+        for y in range(3):
+            for x in range(3):
+                newFace[x][y] = face[y][2-x]
+        return newFace
+
+
+
+    #Rotates a face of the cube - and only
+    #the face! - 90 degrees counter-clockwise
+    def rFacei(face):
+        newFace = [["" for x in range(3)] for y in range(3)]
+        for y in range(3):
+            for x in range(3):
+                newFace[x][y] = face[2-y][x]
+        return newFace
+
+
+
     #Without i: clockwise
     #With i: counter-clockwise
     #Without w: only one layer
     #With w: also the corresponding middle layer
 
     def rF(self):
-        newF = [["" for x in range(3)] for y in range(3)]
-        for y in range(3):
-            for x in range(3):
-                newF[x][y] = self.F[y][2-x]
-        self.F = newF
+        self.F = Rubic.rFace(self.F)
 
         temp = [self.U[x][2] for x in range(3)]
         for x in range(3):
@@ -70,11 +90,7 @@ class Rubic:
 
 
     def rFi(self):
-        newF = [["" for x in range(3)] for y in range(3)]
-        for y in range(3):
-            for x in range(3):
-                newF[x][y] = self.F[2-y][x]
-        self.F = newF
+        self.F = Rubic.rFacei(self.F)
         
         temp = [self.U[x][2] for x in range(3)]
         for x in range(3):
@@ -115,9 +131,10 @@ class Rubic:
             self.L[1][y] = temp[2-y]
 
 
+
 r = Rubic()
 print(r)
 print("\n\n")
-r.rFiw()
+r.rFi()
 print(r)        
 
