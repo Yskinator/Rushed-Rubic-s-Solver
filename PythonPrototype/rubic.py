@@ -59,12 +59,12 @@ class Rubic:
 
     #Inverts face's y-axis
     def iFaceY(face):
-        return [[face[x][2-y] for x in range(3)] for y in range(3)]
+        return [[face[x][2-y] for y in range(3)] for x in range(3)]
 
 
     #Inverts face's x-axis
     def iFaceX(face):
-        return [[face[2-x][y] for x in range(3)] for y in range(3)]
+        return [[face[2-x][y] for y in range(3)] for x in range(3)]
   
 
     #Rotates a face of the cube - and only
@@ -94,6 +94,22 @@ class Rubic:
         self.x()
 
 
+    #Rotates the entire cube clockwise on U
+    def y(self):
+        self.U = Rubic.rFace(self.U)
+        self.D = Rubic.rFacei(self.D)
+        temp = Rubic.iFaceX(Rubic.iFaceY(self.L))
+        self.L = (self.F)
+        self.F = self.R
+        self.R = Rubic.iFaceX(Rubic.iFaceY(self.B))
+        self.B = temp
+
+
+    #Rotates the entire cube counter-clockwise on U
+    def yi(self):
+        self.y()
+        self.y()
+        self.y()
 
     #Without i: clockwise
     #With i: counter-clockwise
@@ -145,6 +161,6 @@ class Rubic:
 r = Rubic()
 print(r)
 print("\n\n")
-r.x()
+r.yi()
 print(r)        
 
