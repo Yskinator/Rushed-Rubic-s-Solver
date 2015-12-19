@@ -284,9 +284,3 @@ class Rubic:
         self.y()
 
 
-r = Rubic()
-print(r)
-print("\n\n")
-r.rB()
-print(r)        
-
