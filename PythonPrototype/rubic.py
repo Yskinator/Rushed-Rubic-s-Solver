@@ -255,10 +255,38 @@ class Rubic:
         self.rFiw()
         self.xi()
 
+    def rB(self):
+        self.y()
+        self.y()
+        self.rF()
+        self.y()
+        self.y()
+
+    def rBi(self):
+        self.y()
+        self.y()
+        self.rFi()
+        self.y()
+        self.y()
+
+    def rBw(self):
+        self.y()
+        self.y()
+        self.rFw()
+        self.y()
+        self.y()
+
+    def rBiw(self):
+        self.y()
+        self.y()
+        self.rFiw()
+        self.y()
+        self.y()
+
 
 r = Rubic()
 print(r)
 print("\n\n")
-r.rD()
+r.rB()
 print(r)        
 
