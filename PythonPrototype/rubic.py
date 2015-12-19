@@ -88,7 +88,7 @@ class Rubic:
 
 
     def rFw(self):
-        self.tF()
+        self.rF()
 
         temp = [self.U[x][1] for x in range(3)]
         for x in range(3):
@@ -102,7 +102,7 @@ class Rubic:
         
 
     def rFiw(self):
-        self.tFi()
+        self.rFi()
 
         temp = [self.U[x][1] for x in range(3)]
         for x in range(3):
@@ -118,6 +118,6 @@ class Rubic:
 r = Rubic()
 print(r)
 print("\n\n")
-r.tFiw()
+r.rFiw()
 print(r)        
 
