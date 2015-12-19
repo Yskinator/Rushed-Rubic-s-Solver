@@ -1,6 +1,5 @@
-#!/usr/bin/env python3.5
 
-class Rubic:
+class Cube:
     F = [["F"+str(x)+str(y) for x in range(3)] for y in range(3)]
     L = [["L"+str(x)+str(y) for x in range(3)] for y in range(3)]
     R = [["R"+str(x)+str(y) for x in range(3)] for y in range(3)]
@@ -70,16 +69,16 @@ class Rubic:
     #Rotates a face of the cube - and only
     #the face! - 90 degrees counter-clockwise
     def rFacei(face):
-        newFace = Rubic.rFace(face)
-        newFace = Rubic.rFace(newFace)
-        newFace = Rubic.rFace(newFace)
+        newFace = Cube.rFace(face)
+        newFace = Cube.rFace(newFace)
+        newFace = Cube.rFace(newFace)
         return newFace
 
 
     #Rotates the entire cube clockwise on R
     def x(self):
-        self.R = Rubic.rFace(self.R)
-        self.L = Rubic.rFacei(self.L)
+        self.R = Cube.rFace(self.R)
+        self.L = Cube.rFacei(self.L)
         temp = self.U
         self.U = self.F
         self.F = self.D
@@ -96,12 +95,12 @@ class Rubic:
 
     #Rotates the entire cube clockwise on U
     def y(self):
-        self.U = Rubic.rFace(self.U)
-        self.D = Rubic.rFacei(self.D)
-        temp = Rubic.iFaceX(Rubic.iFaceY(self.L))
+        self.U = Cube.rFace(self.U)
+        self.D = Cube.rFacei(self.D)
+        temp = Cube.iFaceX(Cube.iFaceY(self.L))
         self.L = (self.F)
         self.F = self.R
-        self.R = Rubic.iFaceX(Rubic.iFaceY(self.B))
+        self.R = Cube.iFaceX(Cube.iFaceY(self.B))
         self.B = temp
 
 
@@ -114,12 +113,12 @@ class Rubic:
 
     #Rotates the entire cube clockwise on F
     def z(self):
-        self.F = Rubic.rFace(self.F)
-        self.B = Rubic.rFacei(self.B)
-        temp = Rubic.rFace(self.U)
-        self.U = Rubic.rFace(self.L)
-        self.L = Rubic.rFace(self.D)
-        self.D = Rubic.rFace(self.R)
+        self.F = Cube.rFace(self.F)
+        self.B = Cube.rFacei(self.B)
+        temp = Cube.rFace(self.U)
+        self.U = Cube.rFace(self.L)
+        self.L = Cube.rFace(self.D)
+        self.D = Cube.rFace(self.R)
         self.R = temp
 
     def zi(self):
@@ -134,7 +133,7 @@ class Rubic:
     #With w: also the corresponding middle layer
 
     def rF(self):
-        self.F = Rubic.rFace(self.F)
+        self.F = Cube.rFace(self.F)
 
         temp = [self.U[x][2] for x in range(3)]
         for x in range(3):
