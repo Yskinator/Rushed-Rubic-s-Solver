@@ -3,19 +3,41 @@ from rubic import Cube as RubicCube
 from solver import Solver
 
 class Cli:
+    _rc = RubicCube()
+    _continue = True
     def doCliThings():
         print("Hello! Welcome to Rushed Rubic's Cube!")
-        print("Here's our cube!")
-        rc = RubicCube()
-        print(str(rc)+"\n\n")
-        print("Let's randomize it!")
-        print("How many random moves?")
-        moveCount = int(input("Move count: "))
-        print("Moving things!")
-        Solver.randomize(rc, moveCount)
-        print("The resulting cube!")
-        print(rc)
+        while Cli._continue:
+            print("Current cube:")
+            Cli.display()
+            Cli.chooseAction()
 
+    def chooseAction():
+        print("Please choose what to do next.")
+        print("1. Randomize")
+        print("2. Manual move")
+        print("3. Solve")
+        print("4. Quit")
+        choice = int(input("Choice: "))
 
+        if choice == 1:
+            Cli.randomize()
+        elif choice == 2:
+            pass
+        elif choice == 3:
+            pass
+        elif choice == 4:
+            Cli._continue = False
+
+    def randomize():
+        print("Please choose the number of random moves. Default 100.")
+        moveCount = int(input("Move count: ") or "100")
+        print("Randomizing..")
+        Solver.randomize(Cli._rc, moveCount)
+
+    def display():
+        print(Cli._rc)
+
+        
 if __name__ == "__main__":
     Cli.doCliThings()
