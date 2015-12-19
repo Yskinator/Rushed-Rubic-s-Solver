@@ -62,8 +62,8 @@ class Rubic:
     #the face! - 90 degrees counter-clockwise
     def rFacei(face):
         newFace = Rubic.rFace(face)
-        newFace = Rubic.rFace(face)
-        newFace = Rubic.rFace(face)
+        newFace = Rubic.rFace(newFace)
+        newFace = Rubic.rFace(newFace)
         return newFace
 
 
