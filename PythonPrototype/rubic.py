@@ -50,7 +50,7 @@ class Rubic:
     #Without w: only one layer
     #With w: also the corresponding middle layer
 
-    def tF(self):
+    def rF(self):
         newF = [["" for x in range(3)] for y in range(3)]
         for y in range(3):
             for x in range(3):
@@ -69,7 +69,7 @@ class Rubic:
 
 
 
-    def tFi(self):
+    def rFi(self):
         newF = [["" for x in range(3)] for y in range(3)]
         for y in range(3):
             for x in range(3):
@@ -87,7 +87,7 @@ class Rubic:
             self.L[2][y] = temp[2-y]
 
 
-    def tFw(self):
+    def rFw(self):
         self.tF()
 
         temp = [self.U[x][1] for x in range(3)]
@@ -101,7 +101,7 @@ class Rubic:
             self.R[1][y] = temp[y]
         
 
-    def tFiw(self):
+    def rFiw(self):
         self.tFi()
 
         temp = [self.U[x][1] for x in range(3)]
