@@ -69,11 +69,8 @@ class Rubic:
 
     #Rotates the entire cube clockwise on R
     def x(self):
-        rFace = Rubic.rFace
-        rFacei = Rubic.rFacei
-
-        self.R = rFace(self.R)
-        self.L = rFacei(self.L)
+        self.R = Rubic.rFace(self.R)
+        self.L = Rubic.rFacei(self.L)
         temp = self.U
         self.U = self.F
         self.F = self.D
