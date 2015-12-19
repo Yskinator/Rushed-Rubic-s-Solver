@@ -7,7 +7,9 @@ class Solver:
               RC.rR, RC.rRi, RC.rRw, RC.rRiw, \
               RC.rU, RC.rUi, RC.rUw, RC.rUiw, \
               RC.rD, RC.rDi, RC.rDw, RC.rDiw, \
-              RC.rB, RC.rBi, RC.rBw, RC.rBiw]
+              RC.rB, RC.rBi, RC.rBw, RC.rBiw, \
+              RC.rE, RC.rEi, RC.rM, RC.rMi, \
+              RC.rS, RC.rSi]
         
 
     def randomize(rc, moveCount):
