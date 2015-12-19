@@ -111,6 +111,23 @@ class Rubic:
         self.y()
         self.y()
 
+
+    #Rotates the entire cube clockwise on F
+    def z(self):
+        self.F = Rubic.rFace(self.F)
+        self.B = Rubic.rFacei(self.B)
+        temp = Rubic.rFace(self.U)
+        self.U = Rubic.rFace(self.L)
+        self.L = Rubic.rFace(self.D)
+        self.D = Rubic.rFace(self.R)
+        self.R = temp
+
+    def zi(self):
+        self.z()
+        self.z()
+        self.z()
+
+
     #Without i: clockwise
     #With i: counter-clockwise
     #Without w: only one layer
@@ -161,6 +178,6 @@ class Rubic:
 r = Rubic()
 print(r)
 print("\n\n")
-r.yi()
+r.zi()
 print(r)        
 
