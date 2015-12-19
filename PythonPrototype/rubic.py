@@ -87,11 +87,37 @@ class Rubic:
             self.L[2][y] = temp[2-y]
 
 
+    def tFw(self):
+        self.tF()
+
+        temp = [self.U[x][1] for x in range(3)]
+        for x in range(3):
+            self.U[x][1] = self.L[1][2-x]
+        for y in range(3):
+            self.L[1][y] = self.D[y][1]
+        for x in range(3):
+            self.D[x][1] = self.R[1][2-x]
+        for y in range(3):
+            self.R[1][y] = temp[y]
+        
+
+    def tFiw(self):
+        self.tFi()
+
+        temp = [self.U[x][1] for x in range(3)]
+        for x in range(3):
+            self.U[x][1] = self.R[1][x]
+        for y in range(3):
+            self.R[1][y] = self.D[2-y][1]
+        for x in range(3):
+            self.D[x][1] = self.L[1][x]
+        for y in range(3):
+            self.L[1][y] = temp[2-y]
 
 
 r = Rubic()
 print(r)
 print("\n\n")
-r.tFi()
+r.tFiw()
 print(r)        
 
