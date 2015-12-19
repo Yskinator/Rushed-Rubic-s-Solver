@@ -174,10 +174,23 @@ class Rubic:
         self.rFw()
 
 
+    def rL(self):
+        self.yi()
+        self.rF()
+        self.y()
+
+
+    def rLi(self):
+        self.yi()
+        self.rFi()
+        self.y()
+
+
+
 
 r = Rubic()
 print(r)
 print("\n\n")
-r.zi()
+r.rL()
 print(r)        
 
