@@ -57,6 +57,15 @@ class Rubic:
         return newFace
 
 
+    #Inverts face's y-axis
+    def iFaceY(face):
+        return [[face[x][2-y] for x in range(3)] for y in range(3)]
+
+
+    #Inverts face's x-axis
+    def iFaceX(face):
+        return [[face[2-x][y] for x in range(3)] for y in range(3)]
+  
 
     #Rotates a face of the cube - and only
     #the face! - 90 degrees counter-clockwise
