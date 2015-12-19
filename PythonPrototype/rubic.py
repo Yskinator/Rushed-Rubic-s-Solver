@@ -185,6 +185,15 @@ class Rubic:
         self.rFi()
         self.y()
 
+    def rLw(self):
+        self.yi()
+        self.rFw()
+        self.y()
+
+    def rLiw(self):
+        self.yi()
+        self.rFiw()
+        self.y()
 
 
 
