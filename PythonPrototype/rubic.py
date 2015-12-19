@@ -282,4 +282,27 @@ class Cube:
         self.y()
         self.y()
 
+    def rE(self):
+        self.rDw()
+        self.rDi()
+
+    def rEi(self):
+        self.rDwi()
+        self.rD()
+
+    def rM(self):
+        self.rLw()
+        self.rLi()
+
+    def rMi(self):
+        self.rLwi()
+        self.rL()
+
+    def rS(self):
+        self.rFw()
+        self.rFi()
+
+    def rSi(self):
+        self.rFwi()
+        self.rF()
 
