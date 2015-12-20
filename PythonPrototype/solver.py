@@ -25,6 +25,8 @@ class Solver:
         self.primeCube()
         print("Primed.")
         print(self._rc)
+        print("Phase 1.")
+        self.phase1()
 
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
@@ -183,3 +185,130 @@ class Solver:
             return True
         else:
             return False
+
+
+    def phase1(self):
+        rc = self._rc
+        cornersFound = 1
+        
+        while cornersFound < 4:
+            rc.y()
+            position = self.lookForUCorner()
+            if position == 0:
+                if self.checkIfDone():
+                    return
+            elif position == 1:
+                Solver.p1a1(rc)
+                cornersFound = cornersFound+1
+            elif position == 2:
+                Solver.p1a2(rc)
+                cornersFound = cornersFound+1
+            elif position == 3:
+                Solver.p1a3(rc)
+                cornersFound = cornersFound+1
+            elif position == 4:
+                Solver.p1a4(rc)
+                cornersFound = cornersFound+1
+            elif position == 5:
+                Solver.p1a5(rc)
+                cornersFound = cornersFound+1
+            elif position == -1:
+                if cornersFound == 1:
+                    print("1 Corner found -1")
+                    rc.y()
+                    Solver.p1a1(rc)
+                    rc.y()
+                    Solver.p1a1(rc)
+                    rc.yi()
+                    rc.yi()
+                    rc.yi()
+                elif cornersFound == 2:
+                    print("2 CornerFound -1")
+                    rc.y()
+                    Solver.p1a1(rc)
+                    rc.yi()
+                    rc.yi()
+                else: #Should be impossible
+                    print(rc)
+                    print(cornersFound)
+                    raise Exception
+
+    def checkIfDone(self):
+        rc = self._rc
+        return rc.U[0][0] == rc.U[2][0] and \
+               rc.U[2][0] == rc.U[2][2] and \
+               rc.U[2][2] == rc.U[0][2]
+
+    def lookForUCorner(self):
+        rc = self._rc
+        UColor = rc.U[1][1]
+        FColor = rc.F[0][0]
+        for lookCount in range(5):
+            if rc.U[2][2] == UColor and \
+               rc.F[2][0] == FColor:
+                return 0
+            elif rc.R[0][2] == UColor and \
+                 (rc.F[2][2] == FColor or \
+                 rc.D[2][0] == FColor):
+                return 1
+            elif rc.F[2][2] == UColor and \
+                 (rc.D[2][0] == FColor or \
+                 rc.R[0][2] == FColor):
+                return 2
+            elif rc.D[2][0] == UColor and \
+                 (rc.R[0][2] == FColor or \
+                 rc.F[2][2] == FColor):
+                return 3
+            elif rc.F[2][0] == UColor and \
+                 (rc.U[2][2] == FColor or \
+                 rc.R[0][0] == FColor):
+                return 4
+            elif rc.R[0][0] == UColor and \
+                 (rc.U[2][2] == FColor or \
+                 rc.F[2][0] == FColor):
+                return 5
+            rc.rD()
+        return -1
+
+
+
+    def p1a1(rc):
+        rc.rRi()
+        rc.rDi()
+        rc.rR()
+
+    def p1a2(rc):
+        rc.rDi()
+        rc.rRi()
+        rc.rD()
+        rc.rR()
+
+    def p1a3(rc):
+        rc.rRi()
+        rc.rD()
+        rc.rR()
+        rc.rD()
+        rc.rD()
+        rc.rRi()
+        rc.rDi()
+        rc.rR()
+
+    def p1a4(rc):
+        rc.rF()
+        rc.rD()
+        rc.rFi()
+        rc.rD()
+        rc.rD()
+        rc.rRi()
+        rc.rD()
+        rc.rR()
+
+    def p1a5(rc):
+        rc.rRi()
+        rc.rDi()
+        rc.rR()
+        rc.rD()
+        rc.rRi()
+        rc.rDi()
+        rc.rR()
+
