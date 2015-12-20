@@ -48,7 +48,7 @@ class Cli:
         elif choice == 3:
             Cli.explainMoves()
         elif choice == 4:
-            pass
+            Cli.solve()
         elif choice == 5:
             Cli._continue = False
 
@@ -95,6 +95,11 @@ class Cli:
         print("Finally, the entire cube can be rotated around its x, y or z axis.")
         print("x is like a hypotetical Rww rotation.")
         print("y is like 'Uww', z is like 'Fww'.")
+
+
+    def solve():
+        solver = Solver()
+        solver.solve(Cli._rc)
 
         
 if __name__ == "__main__":
