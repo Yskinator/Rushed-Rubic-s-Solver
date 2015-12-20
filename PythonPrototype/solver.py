@@ -27,10 +27,20 @@ class Solver:
         print(self._rc)
         print("Phase 1.")
         self.phase1()
+        print("Phase 1 completed.")
         print(self._rc)
+        print("Phase 2.")
         self.phase2()
+        print("Phase 2 completed.")
         print(self._rc)
+        print("Phase 3.")
         self.phase3()
+        print("Phase 3 completed.")
+        print(self._rc)
+        print("Phase 4.")
+        self.phase4()
+        print("Phase 4 completed.")
+        print(self._rc)
 
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
@@ -281,6 +291,44 @@ class Solver:
             elif position == 4:
                 Solver.p3a2(rc)
 
+    def phase4(self):
+        rc = self._rc
+        rc.x()
+        rc.x()
+        for i in range(8):
+            positions = Solver.whichToSwitch(rc)
+            if positions == 0:
+                pass
+            elif positions == 1:
+                Solver.p4a1(rc)
+            elif positions == 2:
+                Solver.p4a2(rc)
+            elif positions == 3:
+                Solver.p4a1(rc)
+                Solver.p4a2(rc)
+            if i%2 == 0:
+                rc.y()
+            elif i == 3:
+                rc.y()
+            else:
+                rc.yi()
+
+    def whichToSwitch(rc):
+        s12 = 0
+        s34 = 0
+        LColor = rc.L[1][1]
+        if rc.L[2][0] != LColor and \
+           rc.F[0][0] != LColor and \
+           rc.U[0][2] != LColor:
+            s12 = 1
+        if rc.L[0][0] != LColor and \
+           rc.B[0][2] != LColor and \
+           rc.U[0][0] != LColor:
+            s34 = 2
+        print(rc)
+        print(s12+s34)
+        return (s12 + s34)
+
     def rotateMiddle(rc):
         FColor = rc.F[0][0]
         for i in range(4):
@@ -508,3 +556,28 @@ class Solver:
         rc.rDi()
         rc.rFi()
 
+    def p4a1(rc):
+        rc.rLi()
+        rc.rUi()
+        rc.rL()
+        rc.rF()
+        rc.rU()
+        rc.rFi()
+        rc.rLi()
+        rc.rU()
+        rc.rL()
+        rc.rU()
+        rc.rU()
+
+    def p4a2(rc):
+        rc.rU()
+        rc.rLi()
+        rc.rUi()
+        rc.rL()
+        rc.rF()
+        rc.rU()
+        rc.rFi()
+        rc.rLi()
+        rc.rU()
+        rc.rL()
+        rc.rU()
