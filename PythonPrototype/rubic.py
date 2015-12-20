@@ -1,14 +1,14 @@
 
 class Cube:
-    F = [["F"+str(x)+str(y) for x in range(3)] for y in range(3)]
-    L = [["L"+str(x)+str(y) for x in range(3)] for y in range(3)]
-    R = [["R"+str(x)+str(y) for x in range(3)] for y in range(3)]
-    U = [["U"+str(x)+str(y) for x in range(3)] for y in range(3)]
-    D = [["D"+str(x)+str(y) for x in range(3)] for y in range(3)]
-    B = [["B"+str(x)+str(y) for x in range(3)] for y in range(3)]
+    F = [["F" for x in range(3)] for y in range(3)]
+    L = [["L" for x in range(3)] for y in range(3)]
+    R = [["R" for x in range(3)] for y in range(3)]
+    U = [["U" for x in range(3)] for y in range(3)]
+    D = [["D" for x in range(3)] for y in range(3)]
+    B = [["B" for x in range(3)] for y in range(3)]
 
     def __str__(self):
-        indentation = "             "
+        indentation = "       "
         s = ""
         for y in range(3):
             s = s + indentation
@@ -287,7 +287,7 @@ class Cube:
         self.rDi()
 
     def rEi(self):
-        self.rDwi()
+        self.rDiw()
         self.rD()
 
     def rM(self):
@@ -295,7 +295,7 @@ class Cube:
         self.rLi()
 
     def rMi(self):
-        self.rLwi()
+        self.rLiw()
         self.rL()
 
     def rS(self):
@@ -303,6 +303,6 @@ class Cube:
         self.rFi()
 
     def rSi(self):
-        self.rFwi()
+        self.rFiw()
         self.rF()
 
