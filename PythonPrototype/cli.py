@@ -18,10 +18,12 @@ class Cli:
               "Dw": RC.rDw, "Diw": RC.rDiw, \
               "B": RC.rB, "Bi": RC.rBi, \
               "Bw": RC.rBw, "Biw": RC.rBiw, \
-              "E": RC.rE, "Ei": RC.rEi, 
+              "E": RC.rE, "Ei": RC.rEi, \
               "M": RC.rM, "Mi": RC.rMi, \
               "S": RC.rS, "Si": RC.rSi, \
-              "x": RC.x, "y": RC.y, "z": RC.z}
+              "x": RC.x, "y": RC.y, "z": RC.z, \
+              "xi": RC.xi, "yi": RC.yi, \
+              "zi": RC.zi}
 
     def doCliThings():
         print("Hello! Welcome to Rushed Rubic's Cube!")
