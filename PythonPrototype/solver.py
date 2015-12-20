@@ -30,6 +30,7 @@ class Solver:
         print(self._rc)
         self.phase2()
         print(self._rc)
+        self.phase3()
 
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
@@ -193,7 +194,6 @@ class Solver:
     def phase1(self):
         rc = self._rc
         cornersFound = 1
-        
         while cornersFound < 4:
             rc.y()
             position = self.lookForUCorner()
@@ -260,6 +260,20 @@ class Solver:
                 #Should be impossible
                 raise Exception
             rc.y()
+
+
+    def phase3(self):
+        rc = self._rc
+        Solver.rotateMiddle(rc)
+        print(rc)
+
+    def rotateMiddle(rc):
+        FColor = rc.F[0][0]
+        for i in range(4):
+            if rc.F[1][1] == FColor:
+                return
+            else:
+                rc.rE()
     
 
     def checkIfP2Complete(rc):
