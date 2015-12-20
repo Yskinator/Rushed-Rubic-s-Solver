@@ -265,7 +265,21 @@ class Solver:
     def phase3(self):
         rc = self._rc
         Solver.rotateMiddle(rc)
-        print(rc)
+        sidesFound = 0
+        while sidesFound != 4:
+            position = Solver.findMiddleLayerEdge(rc)
+            if position == 0:
+                return
+            elif position == 1:
+                Solver.p3a1(rc)
+                sidesFound = sidesFound+1
+            elif position == 2:
+                Solver.p3a2(rc)
+                sidesFound = sidesFound+1
+            elif position == 3:
+                Solver.p3a1(rc)
+            elif position == 4:
+                Solver.p3a2(rc)
 
     def rotateMiddle(rc):
         FColor = rc.F[0][0]
@@ -274,6 +288,48 @@ class Solver:
                 return
             else:
                 rc.rE()
+
+    def findMiddleLayerEdge(rc):
+        for j in range(4):
+            rc.y()
+            FColor = rc.F[0][0]
+            LColor = rc.L[0][0]
+            RColor = rc.R[0][0]
+            for i in range(4):
+                if rc.F[1][2] == FColor:
+                    if rc.D[1][0] == LColor:
+                        return 1
+                    elif rc.D[1][0] == RColor:
+                        return 2
+                elif rc.F[0][1] == LColor and \
+                     rc.L[2][1] == FColor:
+                    return 3
+                elif rc.F[2][1] == RColor and \
+                     rc.R[0][1] == FColor:
+                    return 4
+                rc.rD()
+
+        for i in range(4):
+            if rc.D[1][0] == FColor:
+                if rc.F[1][2] == LColor:
+                    return 3
+                elif rc.F[1][2] == RColor:
+                    return 4
+            rc.rD()
+        
+        #Is a cubicle stuck in middle layer?
+        for i in range(4):
+            FColor = rc.F[0][0]
+            LColor = rc.L[0][0]
+            RColor = rc.R[0][0]
+            if rc.F[0][1] != FColor:
+                return 3
+            elif rc.F[2][1] != FColor:
+                return 4
+            rc.y()
+        #Everything is already in place.
+        return 0
+            
     
 
     def checkIfP2Complete(rc):
@@ -431,3 +487,24 @@ class Solver:
         rc.rM()
         rc.rD()
         rc.rMi()
+
+    def p3a1(rc):
+        rc.rD()
+        rc.rL()
+        rc.rDi()
+        rc.rLi()
+        rc.rDi()
+        rc.rFi()
+        rc.rD()
+        rc.rF()
+
+    def p3a2(rc):
+        rc.rDi()
+        rc.rRi()
+        rc.rD()
+        rc.rR()
+        rc.rD()
+        rc.rF()
+        rc.rDi()
+        rc.rFi()
+
