@@ -39,22 +39,29 @@ class Cli:
         print("3. Explain possible moves")
         print("4. Solve the cube")
         print("5. Quit")
-        choice = int(input("Choice: "))
+        choice = input("Choice: ")
 
-        if choice == 1:
+        if choice == "1":
             Cli.randomize()
-        elif choice == 2:
+        elif choice == "2":
             Cli.chooseMove()
-        elif choice == 3:
+        elif choice == "3":
             Cli.explainMoves()
-        elif choice == 4:
+        elif choice == "4":
             Cli.solve()
-        elif choice == 5:
+        elif choice == "5":
             Cli._continue = False
+        else:
+            print("Please enter a valid number.")
 
     def randomize():
         print("Please choose the number of random moves. Default 100.")
-        moveCount = int(input("Move count: ") or "100")
+        moveCount = input("Move count: ") or "100"
+        try:
+            moveCount = int(moveCount)
+        except ValueError:
+            moveCount = 100
+
         print("Randomizing..")
         Solver.randomize(Cli._rc, moveCount)
 
@@ -66,8 +73,11 @@ class Cli:
         print("Please choose a move")
         Cli.listMoves()
         move = input("Your choice: ")
-        move = Cli._moves[move]
-        move(Cli._rc)
+        try:
+            move = Cli._moves[move]
+            move(Cli._rc)
+        except KeyError:
+            print("Invalid move.")
 
     def listMoves():
         print("Possible moves: " + str(Cli._moves.keys()))
