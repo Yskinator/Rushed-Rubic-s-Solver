@@ -98,7 +98,7 @@ class Cube:
         self.U = Cube.rFace(self.U)
         self.D = Cube.rFacei(self.D)
         temp = Cube.iFaceX(Cube.iFaceY(self.L))
-        self.L = (self.F)
+        self.L = self.F
         self.F = self.R
         self.R = Cube.iFaceX(Cube.iFaceY(self.B))
         self.B = temp
@@ -282,6 +282,8 @@ class Cube:
         self.y()
         self.y()
 
+    #E or equator is the layer between U and D
+    #Turn direction same as D
     def rE(self):
         self.rDw()
         self.rDi()
@@ -290,6 +292,8 @@ class Cube:
         self.rDiw()
         self.rD()
 
+    #M or middle is the layer between L and R
+    #Turn direction same as L
     def rM(self):
         self.rLw()
         self.rLi()
@@ -298,6 +302,8 @@ class Cube:
         self.rLiw()
         self.rL()
 
+    #S or standing is the layer between F and B
+    #Turn direction same as F
     def rS(self):
         self.rFw()
         self.rFi()
