@@ -350,7 +350,6 @@ class Solver:
                 Solver.p6a1(rc)
 
         while not Solver.phase6Done(rc):
-            print("Second loop stuck")
             Solver.p6a1(rc)
 
 
@@ -358,7 +357,6 @@ class Solver:
         LColor = rc.L[1][1]
         RColor = rc.R[1][1]
         BColor = rc.B[1][1]
-        print(rc)
         if (rc.R[1][0] == RColor or \
            rc.U[2][1] == RColor) and \
            (rc.L[1][0] == LColor or \
