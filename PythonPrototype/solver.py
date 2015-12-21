@@ -685,8 +685,6 @@ class Solver:
         rc.rUi()
 
     def p6a1(rc):
-        print("p6a1 before")
-        print(rc)
         rc.rMi()
         rc.rUi()
         rc.rM()
@@ -695,5 +693,3 @@ class Solver:
         rc.rMi()
         rc.rUi()
         rc.rM()
-        print("p6a1 after")
-        print(rc)
