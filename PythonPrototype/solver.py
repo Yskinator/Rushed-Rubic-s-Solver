@@ -299,19 +299,19 @@ class Solver:
         rc = self._rc
         rc.x()
         rc.x()
-        for i in range(8):
+        for i in range(2):
             position = Solver.whichToSwitch(rc)
             if position == 0:
                 pass
-            elif position == 5 or position == 6:
+            if position == 5 or position == 6:
                 rc.y()
                 Solver.p4a1(rc)
                 rc.yi()
-            elif position == 1 or position == 5:
+            if position == 1 or position == 5:
                 Solver.p4a1(rc)
-            elif position == 2 or position == 6:
+            if position == 2 or position == 6:
                 Solver.p4a2(rc)
-            elif position == 3:
+            if position == 3:
                 Solver.p4a1(rc)
                 Solver.p4a2(rc)
             rc.y()
@@ -619,6 +619,7 @@ class Solver:
         rc.rU()
 
     def p4a2(rc):
+        rc.y()
         rc.rU()
         rc.rLi()
         rc.rUi()
@@ -630,6 +631,7 @@ class Solver:
         rc.rU()
         rc.rL()
         rc.rU()
+        rc.yi()
 
     def p5a1(rc):
         rc.rLi()
