@@ -45,6 +45,10 @@ class Solver:
         self.phase5()
         print("Phase 5 completed.")
         print(self._rc)
+        print("Phase 6.")
+        self.phase6()
+        print("Phase 6 completed.")
+        print(self._rc)
 
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
@@ -329,6 +333,41 @@ class Solver:
                 rc.y()
             if not moved:
                 Solver.p5a1(rc)
+
+    def phase6(self):
+        rc = self._rc
+        found = False
+        while not found:
+            for i in range(4):
+                FColor = rc.F[1][1]
+                if rc.F[1][0] == FColor or \
+                   rc.U[1][2] == FColor:
+                    found = True
+                    break
+                else:
+                    rc.y()
+            if not found:
+                Solver.p6a1(rc)
+
+        while not Solver.phase6Done(rc):
+            print("Second loop stuck")
+            Solver.p6a1(rc)
+
+
+    def phase6Done(rc):
+        LColor = rc.L[1][1]
+        RColor = rc.R[1][1]
+        BColor = rc.B[1][1]
+        print(rc)
+        if (rc.R[1][0] == RColor or \
+           rc.U[2][1] == RColor) and \
+           (rc.L[1][0] == LColor or \
+           rc.U[0][1] == LColor)and \
+           (rc.B[1][2] == BColor or \
+           rc.U[1][0] == BColor):
+            return True
+        else:
+            return False
 
     def phase5Done(rc):
         UColor = rc.U[1][1]
@@ -644,3 +683,17 @@ class Solver:
         rc.rL()
         rc.rUi()
         rc.rUi()
+
+    def p6a1(rc):
+        print("p6a1 before")
+        print(rc)
+        rc.rMi()
+        rc.rUi()
+        rc.rM()
+        rc.rUi()
+        rc.rUi()
+        rc.rMi()
+        rc.rUi()
+        rc.rM()
+        print("p6a1 after")
+        print(rc)
