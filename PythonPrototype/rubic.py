@@ -1,11 +1,11 @@
 
 class Cube:
-    F = [["F" for x in range(3)] for y in range(3)]
-    L = [["L" for x in range(3)] for y in range(3)]
-    R = [["R" for x in range(3)] for y in range(3)]
-    U = [["U" for x in range(3)] for y in range(3)]
-    D = [["D" for x in range(3)] for y in range(3)]
-    B = [["B" for x in range(3)] for y in range(3)]
+    F = [["R" for x in range(3)] for y in range(3)]
+    L = [["Y" for x in range(3)] for y in range(3)]
+    R = [["W" for x in range(3)] for y in range(3)]
+    U = [["G" for x in range(3)] for y in range(3)]
+    D = [["B" for x in range(3)] for y in range(3)]
+    B = [["O" for x in range(3)] for y in range(3)]
 
     def __str__(self):
         indentation = "       "

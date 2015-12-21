@@ -2,56 +2,65 @@ from rubic import Cube as RC
 import random
 
 class Solver:
+    _ui = False
     _rc = False
-    _moves = [RC.rF, RC.rFi, RC.rFw, RC.rFiw, \
-              RC.rL, RC.rLi, RC.rLw, RC.rLiw, \
-              RC.rR, RC.rRi, RC.rRw, RC.rRiw, \
-              RC.rU, RC.rUi, RC.rUw, RC.rUiw, \
-              RC.rD, RC.rDi, RC.rDw, RC.rDiw, \
-              RC.rB, RC.rBi, RC.rBw, RC.rBiw, \
-              RC.rE, RC.rEi, RC.rM, RC.rMi, \
-              RC.rS, RC.rSi]
+    _moves = ["F", "Fi", "Fw", "Fiw", \
+              "L", "Li", "Lw", "Liw", \
+              "R", "Ri", "Rw", "Riw", \
+              "U", "Ui", "Uw", "Uiw", \
+              "D", "Di", "Dw", "Diw", \
+              "B", "Bi", "Bw", "Biw", \
+              "E", "Ei", "rM", "Mi", \
+              "S", "Si"]
         
 
-    def randomize(rc, moveCount):
-        for i in range(moveCount):
-            move = random.choice(Solver._moves)
-            move(rc)
-
-
-    def solve(self,rc):
+    def __init__(self, rc, ui):
         self._rc = rc
-        print("Priming cube.")
+        self._ui = ui
+
+    def randomize(self, moveCount, show = False):
+        for i in range(moveCount):
+            move = random.choice(self._moves)
+            if show:
+                self._ui.do(move)
+            else: 
+                self._ui.execute(move)
+
+
+    def solve(self, rc, ui):
+        self._rc = rc
+        self._ui = ui
+        self._ui.show("Priming cube.")
         self.primeCube()
-        print("Primed.")
-        print(self._rc)
-        print("Phase 1.")
+        self._ui.show("Primed.")
+        self._ui.show(self._rc)
+        self._ui.show("Phase 1.")
         self.phase1()
-        print("Phase 1 completed.")
-        print(self._rc)
-        print("Phase 2.")
+        self._ui.show("Phase 1 completed.")
+        self._ui.show(self._rc)
+        self._ui.show("Phase 2.")
         self.phase2()
-        print("Phase 2 completed.")
-        print(self._rc)
-        print("Phase 3.")
+        self._ui.show("Phase 2 completed.")
+        self._ui.show(self._rc)
+        self._ui.show("Phase 3.")
         self.phase3()
-        print("Phase 3 completed.")
-        print(self._rc)
-        print("Phase 4.")
+        self._ui.show("Phase 3 completed.")
+        self._ui.show(self._rc)
+        self._ui.show("Phase 4.")
         self.phase4()
-        print("Phase 4 completed.")
-        print(self._rc)
-        print("Phase 5.")
+        self._ui.show("Phase 4 completed.")
+        self._ui.show(self._rc)
+        self._ui.show("Phase 5.")
         self.phase5()
-        print("Phase 5 completed.")
-        print(self._rc)
-        print("Phase 6.")
+        self._ui.show("Phase 5 completed.")
+        self._ui.show(self._rc)
+        self._ui.show("Phase 6.")
         self.phase6()
-        print("Phase 6 completed.")
-        print(self._rc)
-        print("Phase 7.")
+        self._ui.show("Phase 6 completed.")
+        self._ui.show(self._rc)
+        self._ui.show("Phase 7.")
         self.phase7()
-        print("Phase 7 completed.")
+        self._ui.show("Phase 7 completed.")
 
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
@@ -69,26 +78,26 @@ class Solver:
             return
         elif self.DCorner():
             return
-        Solver.randomize(self._rc,10)
+        self.randomize(self._rc, 10, True)
         self.primeCube()
         return
 
     #Is one of U's corners the same color as its
     #center?
     def UCorner(self):
-        _rc = self._rc
-        color = _rc.U[1][1]
-        if _rc.U[2][2] == color:
+        rc = self._rc
+        color = rc.U[1][1]
+        if rc.U[2][2] == color:
             return True
-        elif _rc.U[0][2] == color:
-            _rc.yi()
+        elif rc.U[0][2] == color:
+            self._ui.do("yi")
             return True
-        elif _rc.U[2][0] == color:
-            _rc.y()
+        elif rc.U[2][0] == color:
+            self._ui.do("y")
             return True
-        elif _rc.U[0][0] == color:
-            _rc.y()
-            _rc.y()
+        elif rc.U[0][0] == color:
+            self._ui.do("y")
+            self._ui.do("y")
             return True
         else:
             return False
@@ -96,117 +105,117 @@ class Solver:
     #Is one of F's corners the same color as its
     #center?
     def FCorner(self):
-        _rc = self._rc
-        color = _rc.F[1][1]
-        if _rc.F[2][2] == color:
-            _rc.x()
+        rc = self._rc
+        color = rc.F[1][1]
+        if rc.F[2][2] == color:
+            rc.x()
             return True
-        elif _rc.F[2][0] == color:
-            _rc.z()
-            _rc.x()
+        elif rc.F[2][0] == color:
+            rc.z()
+            rc.x()
             return True
-        elif _rc.F[0][2] == color:
-            _rc.zi()
-            _rc.x()
+        elif rc.F[0][2] == color:
+            rc.zi()
+            rc.x()
             return True
-        elif _rc.F[0][0] == color:
-            _rc.z()
-            _rc.z()
-            _rc.x()
+        elif rc.F[0][0] == color:
+            rc.z()
+            rc.z()
+            rc.x()
             return True
         else:
             return False
 
     def LCorner(self):
-        _rc = self._rc
-        color = _rc.L[1][1]
-        if _rc.L[2][0] == color:
-            _rc.z()
+        rc = self._rc
+        color = rc.L[1][1]
+        if rc.L[2][0] == color:
+            rc.z()
             return True
-        elif _rc.L[0][0] == color:
-            _rc.xi()
-            _rc.z()
+        elif rc.L[0][0] == color:
+            rc.xi()
+            rc.z()
             return True
-        elif _rc.L[2][2] == color:
-            _rc.x()
-            _rc.z()
+        elif rc.L[2][2] == color:
+            rc.x()
+            rc.z()
             return True
-        elif _rc.L[0][2] == color:
-            _rc.x()
-            _rc.x()
-            _rc.z()
+        elif rc.L[0][2] == color:
+            rc.x()
+            rc.x()
+            rc.z()
             return True
         else:
             return False
 
     def RCorner(self):
-        _rc = self._rc
-        color = _rc.R[1][1]
-        if _rc.R[0][2] == color:
-            _rc.zi()
+        rc = self._rc
+        color = rc.R[1][1]
+        if rc.R[0][2] == color:
+            rc.zi()
             return True
-        elif _rc.R[2][2] == color:
-            _rc.x()
-            _rc.zi()
+        elif rc.R[2][2] == color:
+            rc.x()
+            rc.zi()
             return True
-        elif _rc.R[0][0] == color:
-            _rc.xi()
-            _rc.zi()
+        elif rc.R[0][0] == color:
+            rc.xi()
+            rc.zi()
             return True
-        elif _rc.R[2][0] == color:
-            _rc.x()
-            _rc.x()
-            _rc.zi()
+        elif rc.R[2][0] == color:
+            rc.x()
+            rc.x()
+            rc.zi()
             return True
         else:
             return False
 
 
     def BCorner(self):
-        _rc = self._rc
-        color = _rc.B[1][1]
-        if _rc.B[2][2] == color:
-            _rc.xi()
+        rc = self._rc
+        color = rc.B[1][1]
+        if rc.B[2][2] == color:
+            rc.xi()
             return True
-        elif _rc.B[2][0] == color:
-            _rc.zi()
-            _rc.xi()
+        elif rc.B[2][0] == color:
+            rc.zi()
+            rc.xi()
             return True
-        elif _rc.B[0][2] == color:
-            _rc.z()
-            _rc.xi()
+        elif rc.B[0][2] == color:
+            rc.z()
+            rc.xi()
             return True
-        elif _rc.B[0][0] == color:
-            _rc.z()
-            _rc.z()
-            _rc.xi()
+        elif rc.B[0][0] == color:
+            rc.z()
+            rc.z()
+            rc.xi()
             return True
         else:
             return False
 
 
     def DCorner(self):
-        _rc = self._rc
-        color = _rc.D[1][1]
-        if _rc.D[2][2] == color:
-            _rc.x()
-            _rc.x()
+        rc = self._rc
+        color = rc.D[1][1]
+        if rc.D[2][2] == color:
+            rc.x()
+            rc.x()
             return True
-        elif _rc.D[2][0] == color:
-            _rc.yi()
-            _rc.x()
-            _rc.x()
+        elif rc.D[2][0] == color:
+            self._ui.do("yi")
+            rc.x()
+            rc.x()
             return True
-        elif _rc.D[0][2] == color:
-            _rc.y()
-            _rc.x()
-            _rc.x()
+        elif rc.D[0][2] == color:
+            self._ui.do("y")
+            rc.x()
+            rc.x()
             return True
-        elif _rc.D[0][0] == color:
-            _rc.y()
-            _rc.y()
-            _rc.x()
-            _rc.x()
+        elif rc.D[0][0] == color:
+            self._ui.do("y")
+            self._ui.do("y")
+            rc.x()
+            rc.x()
             return True
         else:
             return False
@@ -216,39 +225,39 @@ class Solver:
         rc = self._rc
         cornersFound = 1
         while cornersFound < 4:
-            rc.y()
+            self._ui.do("y")
             position = self.lookForUCorner()
             if position == 0:
                 cornersFound = cornersFound+1
             elif position == 1:
-                Solver.p1a1(rc)
+                self.p1a1()
                 cornersFound = cornersFound+1
             elif position == 2:
-                Solver.p1a2(rc)
+                self.p1a2()
                 cornersFound = cornersFound+1
             elif position == 3:
-                Solver.p1a3(rc)
+                self.p1a3()
                 cornersFound = cornersFound+1
             elif position == 4:
-                Solver.p1a4(rc)
+                self.p1a4()
                 cornersFound = cornersFound+1
             elif position == 5:
-                Solver.p1a5(rc)
+                self.p1a5()
                 cornersFound = cornersFound+1
             elif position == -1:
                 if cornersFound == 1:
-                    rc.y()
-                    Solver.p1a1(rc)
-                    rc.y()
-                    Solver.p1a1(rc)
-                    rc.yi()
-                    rc.yi()
-                    rc.yi()
+                    self._ui.do("y")
+                    self.p1a1()
+                    self._ui.do("y")
+                    self.p1a1()
+                    self._ui.do("yi")
+                    self._ui.do("yi")
+                    self._ui.do("yi")
                 elif cornersFound == 2:
-                    rc.y()
-                    Solver.p1a1(rc)
-                    rc.yi()
-                    rc.yi()
+                    self._ui.do("y")
+                    self.p1a1()
+                    self._ui.do("yi")
+                    self._ui.do("yi")
                 else: #Should be impossible
                     raise Exception
 
@@ -261,46 +270,46 @@ class Solver:
                 if Solver.checkIfP2Complete(rc):
                     return
             elif position == 1:
-                Solver.p2a1(rc)
+                self.p2a1()
                 sidesFound = sidesFound+1
             elif position == 2:
-                Solver.p2a2(rc)
+                self.p2a2()
                 sidesFound = sidesFound+1
             elif position == 3:
-                Solver.p2a3(rc)
+                self.p2a3()
                 sidesFound = sidesFound+1
             elif position == 4:
-                Solver.p2a4(rc)
+                self.p2a4()
                 sidesFound = sidesFound+1
             elif position == 5:
-                Solver.p2a5(rc)
+                self.p2a5()
                 sidesFound = sidesFound+1
             elif position == 6:
-                Solver.p2a1(rc)
+                self.p2a1()
             elif position == -1:
                 #Should be impossible
                 raise Exception
-            rc.y()
+            self._ui.do("y")
 
 
     def phase3(self):
         rc = self._rc
-        Solver.rotateMiddle(rc)
+        self.rotateMiddle()
         sidesFound = 0
         while sidesFound != 4:
-            position = Solver.findMiddleLayerEdge(rc)
+            position = self.findMiddleLayerEdge()
             if position == 0:
                 return
             elif position == 1:
-                Solver.p3a1(rc)
+                self.p3a1()
                 sidesFound = sidesFound+1
             elif position == 2:
-                Solver.p3a2(rc)
+                self.p3a2()
                 sidesFound = sidesFound+1
             elif position == 3:
-                Solver.p3a1(rc)
+                self.p3a1()
             elif position == 4:
-                Solver.p3a2(rc)
+                self.p3a2()
 
     def phase4(self):
         rc = self._rc
@@ -311,17 +320,17 @@ class Solver:
             if position == 0:
                 pass
             if position == 5 or position == 6:
-                rc.y()
-                Solver.p4a1(rc)
-                rc.yi()
+                self._ui.do("y")
+                self.p4a1()
+                self._ui.do("yi")
             if position == 1 or position == 5:
-                Solver.p4a1(rc)
+                self.p4a1()
             if position == 2 or position == 6:
-                Solver.p4a2(rc)
+                self.p4a2()
             if position == 3:
-                Solver.p4a1(rc)
-                Solver.p4a2(rc)
-            rc.y()
+                self.p4a1()
+                self.p4a2()
+            self._ui.do("y")
 
 
     def phase5(self):
@@ -330,12 +339,12 @@ class Solver:
             moved = False
             for i in range(4):
                 if Solver.hasPattern(rc):
-                    Solver.p5a1(rc)
+                    self.p5a1()
                     moved = True
                     break
-                rc.y()
+                self._ui.do("y")
             if not moved:
-                Solver.p5a1(rc)
+                self.p5a1()
 
     def phase6(self):
         rc = self._rc
@@ -348,12 +357,12 @@ class Solver:
                     found = True
                     break
                 else:
-                    rc.y()
+                    self._ui.do("y")
             if not found:
-                Solver.p6a1(rc)
+                self.p6a1()
 
         while not Solver.phase6Done(rc):
-            Solver.p6a1(rc)
+            self.p6a1()
 
 
     def phase7(self):
@@ -363,10 +372,10 @@ class Solver:
             if pattern == "None":
                 pass
             elif pattern == "H":
-                Solver.p7a1(rc)
+                self.p7a1()
             elif pattern == "Fish":
-                Solver.p7a2(rc)
-            rc.y()
+                self.p7a2()
+            self._ui.do("y")
         
 
     def findPattern(rc):
@@ -443,17 +452,18 @@ class Solver:
             s24 = 4
         return (s12 + s34 + s24)
 
-    def rotateMiddle(rc):
-        FColor = rc.F[0][0]
+    def rotateMiddle(self):
+        FColor = self._rc.F[0][0]
         for i in range(4):
-            if rc.F[1][1] == FColor:
+            if self._rc.F[1][1] == FColor:
                 return
             else:
-                rc.rE()
+                self._ui.do("E")
 
-    def findMiddleLayerEdge(rc):
+    def findMiddleLayerEdge(self):
+        rc = self._rc
         for j in range(4):
-            rc.y()
+            self._ui.do("y")
             FColor = rc.F[0][0]
             LColor = rc.L[0][0]
             RColor = rc.R[0][0]
@@ -469,7 +479,7 @@ class Solver:
                 elif rc.F[2][1] == RColor and \
                      rc.R[0][1] == FColor:
                     return 4
-                rc.rD()
+                self._ui.do("D")
 
         for i in range(4):
             if rc.D[1][0] == FColor:
@@ -477,7 +487,7 @@ class Solver:
                     return 3
                 elif rc.F[1][2] == RColor:
                     return 4
-            rc.rD()
+            self._ui.do("D")
         
         #Is a cubicle stuck in middle layer?
         for i in range(4):
@@ -488,7 +498,7 @@ class Solver:
                 return 3
             elif rc.F[2][1] != FColor:
                 return 4
-            rc.y()
+            self._ui.do("y")
         #Everything is already in place.
         return 0
             
@@ -524,9 +534,9 @@ class Solver:
             elif rc.F[1][0] == UColor and \
                  rc.U[1][2] == FColor:
                 return 5
-            rc.rDw()
+            self._ui.do("Dw")
         for lookCount in range(4):
-            rc.y()
+            self._ui.do("y")
             if (rc.U[1][2] == UColor and \
                rc.F[1][0] == FColor) or \
                (rc.F[1][0] == UColor and \
@@ -570,196 +580,196 @@ class Solver:
                  (rc.U[2][2] == FColor or \
                  rc.F[2][0] == FColor):
                 return 5
-            rc.rD()
+            self._ui.do("D")
         return -1
 
 
 
-    def p1a1(rc):
-        rc.rRi()
-        rc.rDi()
-        rc.rR()
+    def p1a1(self):
+        self._ui.do("Ri")
+        self._ui.do("Di")
+        self._ui.do("R")
 
-    def p1a2(rc):
-        rc.rDi()
-        rc.rRi()
-        rc.rD()
-        rc.rR()
+    def p1a2(self):
+        self._ui.do("Di")
+        self._ui.do("Ri")
+        self._ui.do("D")
+        self._ui.do("R")
 
-    def p1a3(rc):
-        rc.rRi()
-        rc.rD()
-        rc.rR()
-        rc.rD()
-        rc.rD()
-        rc.rRi()
-        rc.rDi()
-        rc.rR()
+    def p1a3(self):
+        self._ui.do("Ri")
+        self._ui.do("D")
+        self._ui.do("R")
+        self._ui.do("D")
+        self._ui.do("D")
+        self._ui.do("Ri")
+        self._ui.do("Di")
+        self._ui.do("R")
 
-    def p1a4(rc):
-        rc.rF()
-        rc.rD()
-        rc.rFi()
-        rc.rD()
-        rc.rD()
-        rc.rRi()
-        rc.rD()
-        rc.rR()
+    def p1a4(self):
+        self._ui.do("F")
+        self._ui.do("D")
+        self._ui.do("Fi")
+        self._ui.do("D")
+        self._ui.do("D")
+        self._ui.do("Ri")
+        self._ui.do("D")
+        self._ui.do("R")
 
-    def p1a5(rc):
-        rc.rRi()
-        rc.rDi()
-        rc.rR()
-        rc.rD()
-        rc.rRi()
-        rc.rDi()
-        rc.rR()
+    def p1a5(self):
+        self._ui.do("Ri")
+        self._ui.do("Di")
+        self._ui.do("R")
+        self._ui.do("D")
+        self._ui.do("Ri")
+        self._ui.do("Di")
+        self._ui.do("R")
 
-    def p2a1(rc):
-        rc.rM()
-        rc.rDi()
-        rc.rDi()
-        rc.rMi()
+    def p2a1(self):
+        self._ui.do("M")
+        self._ui.do("Di")
+        self._ui.do("Di")
+        self._ui.do("Mi")
 
-    def p2a2(rc):
-        rc.rDi()
-        rc.rM()
-        rc.rD()
-        rc.rMi()
+    def p2a2(self):
+        self._ui.do("Di")
+        self._ui.do("M")
+        self._ui.do("D")
+        self._ui.do("Mi")
 
-    def p2a3(rc):
-        rc.rE()
-        rc.rF()
-        rc.rEi()
-        rc.rFi()
+    def p2a3(self):
+        self._ui.do("E")
+        self._ui.do("F")
+        self._ui.do("Ei")
+        self._ui.do("Fi")
 
-    def p2a4(rc):
-        rc.rE()
-        rc.rFi()
-        rc.rEi()
-        rc.rEi()
-        rc.rF()
+    def p2a4(self):
+        self._ui.do("E")
+        self._ui.do("Fi")
+        self._ui.do("Ei")
+        self._ui.do("Ei")
+        self._ui.do("F")
 
-    def p2a5(rc):
-        rc.rM()
-        rc.rDi()
-        rc.rDi()
-        rc.rMi()
-        rc.rDi()
-        rc.rM()
-        rc.rD()
-        rc.rMi()
+    def p2a5(self):
+        self._ui.do("M")
+        self._ui.do("Di")
+        self._ui.do("Di")
+        self._ui.do("Mi")
+        self._ui.do("Di")
+        self._ui.do("M")
+        self._ui.do("D")
+        self._ui.do("Mi")
 
-    def p3a1(rc):
-        rc.rD()
-        rc.rL()
-        rc.rDi()
-        rc.rLi()
-        rc.rDi()
-        rc.rFi()
-        rc.rD()
-        rc.rF()
+    def p3a1(self):
+        self._ui.do("D")
+        self._ui.do("L")
+        self._ui.do("Di")
+        self._ui.do("Li")
+        self._ui.do("Di")
+        self._ui.do("Fi")
+        self._ui.do("D")
+        self._ui.do("F")
 
-    def p3a2(rc):
-        rc.rDi()
-        rc.rRi()
-        rc.rD()
-        rc.rR()
-        rc.rD()
-        rc.rF()
-        rc.rDi()
-        rc.rFi()
+    def p3a2(self):
+        self._ui.do("Di")
+        self._ui.do("Ri")
+        self._ui.do("D")
+        self._ui.do("R")
+        self._ui.do("D")
+        self._ui.do("F")
+        self._ui.do("Di")
+        self._ui.do("Fi")
 
-    def p4a1(rc):
-        rc.rLi()
-        rc.rUi()
-        rc.rL()
-        rc.rF()
-        rc.rU()
-        rc.rFi()
-        rc.rLi()
-        rc.rU()
-        rc.rL()
-        rc.rU()
-        rc.rU()
+    def p4a1(self):
+        self._ui.do("Li")
+        self._ui.do("Ui")
+        self._ui.do("L")
+        self._ui.do("F")
+        self._ui.do("U")
+        self._ui.do("Fi")
+        self._ui.do("Li")
+        self._ui.do("U")
+        self._ui.do("L")
+        self._ui.do("U")
+        self._ui.do("U")
 
-    def p4a2(rc):
-        rc.y()
-        rc.rU()
-        rc.rLi()
-        rc.rUi()
-        rc.rL()
-        rc.rF()
-        rc.rU()
-        rc.rFi()
-        rc.rLi()
-        rc.rU()
-        rc.rL()
-        rc.rU()
-        rc.yi()
+    def p4a2(self):
+        self._ui.do("y")
+        self._ui.do("U")
+        self._ui.do("Li")
+        self._ui.do("Ui")
+        self._ui.do("L")
+        self._ui.do("F")
+        self._ui.do("U")
+        self._ui.do("Fi")
+        self._ui.do("Li")
+        self._ui.do("U")
+        self._ui.do("L")
+        self._ui.do("U")
+        self._ui.do("yi")
 
-    def p5a1(rc):
-        rc.rLi()
-        rc.rUi()
-        rc.rL()
-        rc.rUi()
-        rc.rLi()
-        rc.rUi()
-        rc.rUi()
-        rc.rL()
-        rc.rUi()
-        rc.rUi()
+    def p5a1(self):
+        self._ui.do("Li")
+        self._ui.do("Ui")
+        self._ui.do("L")
+        self._ui.do("Ui")
+        self._ui.do("Li")
+        self._ui.do("Ui")
+        self._ui.do("Ui")
+        self._ui.do("L")
+        self._ui.do("Ui")
+        self._ui.do("Ui")
 
-    def p6a1(rc):
-        rc.rMi()
-        rc.rUi()
-        rc.rM()
-        rc.rUi()
-        rc.rUi()
-        rc.rMi()
-        rc.rUi()
-        rc.rM()
+    def p6a1(self):
+        self._ui.do("Mi")
+        self._ui.do("Ui")
+        self._ui.do("M")
+        self._ui.do("Ui")
+        self._ui.do("Ui")
+        self._ui.do("Mi")
+        self._ui.do("Ui")
+        self._ui.do("M")
 
-    def p7a1(rc):
-        rc.rRi()
-        rc.rEi()
-        rc.rRi()
-        rc.rRi()
-        rc.rEi()
-        rc.rEi()
-        rc.rRi()
-        rc.rUi()
-        rc.rUi()
-        rc.rR()
-        rc.rE()
-        rc.rE()
-        rc.rRi()
-        rc.rRi()
-        rc.rE()
-        rc.rR()
-        rc.rUi()
-        rc.rUi()
+    def p7a1(self):
+        self._ui.do("Ri")
+        self._ui.do("Ei")
+        self._ui.do("Ri")
+        self._ui.do("Ri")
+        self._ui.do("Ei")
+        self._ui.do("Ei")
+        self._ui.do("Ri")
+        self._ui.do("Ui")
+        self._ui.do("Ui")
+        self._ui.do("R")
+        self._ui.do("E")
+        self._ui.do("E")
+        self._ui.do("Ri")
+        self._ui.do("Ri")
+        self._ui.do("E")
+        self._ui.do("R")
+        self._ui.do("Ui")
+        self._ui.do("Ui")
 
-    def p7a2(rc):
-        rc.rFi()
-        rc.rLi()
-        rc.rRi()
-        rc.rEi()
-        rc.rRi()
-        rc.rRi()
-        rc.rEi()
-        rc.rEi()
-        rc.rRi()
-        rc.rUi()
-        rc.rUi()
-        rc.rR()
-        rc.rE()
-        rc.rE()
-        rc.rRi()
-        rc.rRi()
-        rc.rE()
-        rc.rR()
-        rc.rUi()
-        rc.rUi()
-        rc.rL()
-        rc.rF()
+    def p7a2(self):
+        self._ui.do("Fi")
+        self._ui.do("Li")
+        self._ui.do("Ri")
+        self._ui.do("Ei")
+        self._ui.do("Ri")
+        self._ui.do("Ri")
+        self._ui.do("Ei")
+        self._ui.do("Ei")
+        self._ui.do("Ri")
+        self._ui.do("Ui")
+        self._ui.do("Ui")
+        self._ui.do("R")
+        self._ui.do("E")
+        self._ui.do("E")
+        self._ui.do("Ri")
+        self._ui.do("Ri")
+        self._ui.do("E")
+        self._ui.do("R")
+        self._ui.do("Ui")
+        self._ui.do("Ui")
+        self._ui.do("L")
+        self._ui.do("F")

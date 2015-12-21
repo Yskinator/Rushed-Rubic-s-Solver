@@ -1,10 +1,14 @@
 #!/usr/bin/env python3.5
 from rubic import Cube as RC
 from solver import Solver
+import time
 
 class Cli:
-    _rc = RC()
+    _rc = False
+    _solver = False
     _continue = True
+    _waitTime = 0.1
+    _moveCount = 0
 
     _moves = {"F": RC.rF, "Fi": RC.rFi, \
               "Fw": RC.rFw, "Fiw": RC.rFiw, \
@@ -25,36 +29,51 @@ class Cli:
               "xi": RC.xi, "yi": RC.yi, \
               "zi": RC.zi}
 
-    def doCliThings():
-        print("Hello! Welcome to Rushed Rubic's Cube!")
-        while Cli._continue:
-            print("Current cube:")
-            Cli.display()
-            Cli.chooseAction()
+    def __init__(self):
+        self._rc = RC()
+        self._solver = Solver(self._rc, self)
 
-    def chooseAction():
+    def doCliThings(self):
+        print("Hello! Welcome to Rushed Rubic's Cube!")
+        while cli._continue:
+            print("Current cube:")
+            cli.display()
+            cli.chooseAction()
+
+    def chooseAction(self):
         print("Please choose what to do next.")
         print("1. Randomize")
         print("2. Manual move")
         print("3. Explain possible moves")
         print("4. Solve the cube")
-        print("5. Quit")
+        print("5. Set move delay")
+        print("6. Quit")
         choice = input("Choice: ")
 
         if choice == "1":
-            Cli.randomize()
+            cli.randomize()
         elif choice == "2":
-            Cli.chooseMove()
+            cli.chooseMove()
         elif choice == "3":
-            Cli.explainMoves()
+            cli.explainMoves()
         elif choice == "4":
-            Cli.solve()
+            cli.solve()
         elif choice == "5":
-            Cli._continue = False
+            cli.setDelay()
+        elif choice == "6":
+            cli._continue = False
         else:
             print("Please enter a valid number.")
 
-    def randomize():
+    def setDelay(self):
+        delay = input("Delay in seconds: ")
+        try:
+            delay = float(delay)
+            self._waitTime = delay
+        except ValueError:
+            print("Invalid value. No changes.")
+
+    def randomize(self):
         print("Please choose the number of random moves. Default 100.")
         moveCount = input("Move count: ") or "100"
         try:
@@ -63,26 +82,40 @@ class Cli:
             moveCount = 100
 
         print("Randomizing..")
-        Solver.randomize(Cli._rc, moveCount)
+        self._solver.randomize(moveCount)
 
-    def display():
-        print(Cli._rc)
+    def display(self):
+        print(cli._rc)
 
 
-    def chooseMove():
+    def chooseMove(self):
         print("Please choose a move")
-        Cli.listMoves()
+        cli.listMoves()
         move = input("Your choice: ")
+        cli.execute(move)
+
+    def execute(self, move):
         try:
-            move = Cli._moves[move]
-            move(Cli._rc)
+            move = cli._moves[move]
+            move(cli._rc)
+            self._moveCount = self._moveCount+1
         except KeyError:
             print("Invalid move.")
 
-    def listMoves():
-        print("Possible moves: " + str(Cli._moves.keys()))
+    def do(self,move):
+        print("Executing move " + move)
+        self.execute(move)
+        print("Current status:")
+        print(self._rc)
+        time.sleep(self._waitTime)
 
-    def explainMoves():
+    def show(self, message):
+        print(message)
+
+    def listMoves(self):
+        print("Possible moves: " + str(cli._moves.keys()))
+
+    def explainMoves(self):
         print("The cube has six faces.")
         print("Front, left, right, up, down,  behind.")
         print("We refer to these as F, L, R, U, D and B.")
@@ -107,10 +140,12 @@ class Cli:
         print("y is like 'Uww', z is like 'Fww'.")
 
 
-    def solve():
-        solver = Solver()
-        solver.solve(Cli._rc)
+    def solve(self):
+        self._moveCount = 0
+        self._solver.solve(cli._rc, self)
+        print("Total moves: " + str(self._moveCount))
 
         
 if __name__ == "__main__":
-    Cli.doCliThings()
+    cli = Cli()
+    cli.doCliThings()
