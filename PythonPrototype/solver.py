@@ -41,6 +41,10 @@ class Solver:
         self.phase4()
         print("Phase 4 completed.")
         print(self._rc)
+        print("Phase 5.")
+        self.phase5()
+        print("Phase 5 completed.")
+        print(self._rc)
 
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
@@ -311,6 +315,44 @@ class Solver:
                 Solver.p4a1(rc)
                 Solver.p4a2(rc)
             rc.y()
+
+
+    def phase5(self):
+        rc = self._rc
+        while not Solver.phase5Done(rc):
+            moved = False
+            for i in range(4):
+                if Solver.hasPattern(rc):
+                    Solver.p5a1(rc)
+                    moved = True
+                    break
+                rc.y()
+            if not moved:
+                Solver.p5a1(rc)
+
+    def phase5Done(rc):
+        UColor = rc.U[1][1]
+        if rc.U[0][0] == UColor and \
+           rc.U[2][0] == UColor and \
+           rc.U[2][2] == UColor and \
+           rc.U[0][2] == UColor:
+            return True
+        else: 
+            return False
+
+
+    def hasPattern(rc):
+        UColor = rc.U[1][1]
+        if (rc.F[0][0] == UColor and \
+           rc.U[2][2] == UColor) or \
+           (rc.R[0][0] == UColor and \
+           rc.R[2][0] == UColor) or \
+           (rc.U[2][2] == UColor and \
+           rc.R[2][0] == UColor):
+            return True
+        else:
+            return False
+        
             
 
     def whichToSwitch(rc):
@@ -588,3 +630,15 @@ class Solver:
         rc.rU()
         rc.rL()
         rc.rU()
+
+    def p5a1(rc):
+        rc.rLi()
+        rc.rUi()
+        rc.rL()
+        rc.rUi()
+        rc.rLi()
+        rc.rUi()
+        rc.rUi()
+        rc.rL()
+        rc.rUi()
+        rc.rUi()
