@@ -16,37 +16,52 @@ contains
         newRC%B = "O"
     end function
 
-    character(len=500) function str(rc)
+     subroutine printStr(rc)
         implicit none
-        type(RubicCube), intent(in) :: rc
+        type(RubicCube) :: rc
         character(len=7) :: indent = "       "
-        character(len=20) :: row
+        character(len=60) :: row
         integer :: i, j
-
         do i=1, 3
-            write(row, '(A1, x)') rc%F(1:3, i)
-            str = trim(str)//indent &
-                //trim(row)//"\n"
+            row = ""
+            do j=1, 3
+                row = trim(row)//" "//rc%U(j, i)
+            end do
+            print *,indent//trim(row)
         end do
-        str = trim(str)//"\n"
+        print *, ""
         do i=1, 3
-            write(row, '(3(A1,x), x)') &
-                 rc%L(1:3, i), rc%F(1:3, i), &
-                 rc%R(1:3, i)
-            str = trim(str)//trim(row)//"\n"
+            row = ""
+            do j=1, 3
+                row = trim(row)//" "//rc%L(j, i)
+            end do
+            row = trim(row)//"  "//rc%F(1, i)
+            do j=2, 3
+                row = trim(row)//" "//rc%F(j, i)
+            end do
+            row = trim(row)//"  "//rc%R(1, i)
+            do j=2, 3
+                row = trim(row)//" "//rc%R(j, i)
+            end do
+            print *, row
         end do
-        str = trim(str)//"\n"
+        print *, ""
         do i=1, 3
-            write(row, '(A1, x)') rc%D(1:3, i)
-            str = trim(str)//indent &
-                //trim(row)//"\n"
+            row = ""
+            do j=1, 3
+                row = trim(row)//" "//rc%D(j, i)
+            end do
+            print *, indent//trim(row)
         end do
+        print *, ""
         do i=1, 3
-            write(row, '(A1, x)') rc%B(1:3, i)
-            str = trim(str)//indent &
-                //trim(row)//"\n"
+            row = ""
+            do j=1, 3
+                row = trim(row)//" "//rc%B(j, i)
+            end do
+            print *, indent//trim(row)
         end do
-    end function
+    end subroutine
 
     !Rotates a face of the cube - and only
     !the face! - 90 degrees clockwise.
@@ -55,11 +70,12 @@ contains
         character(len=1),dimension(3,3) :: rFace
         character(len=1),dimension(3,3),intent(in) :: face
         integer :: i, j
-        
+        rFace = face
         do i=1, 3
             do j=1, 3
-                rFace(j,i) = face(i, 2-j)
+                rFace(j,i) = face(i, j)
             end do
+            rFace(i,1:3) = rFace(i,3:1:-1)
         end do
     end function
 
@@ -226,6 +242,14 @@ contains
         type(RubicCube) :: rc
         call yi(rc)
         call rFw(rc)
+        call y(rc)
+    end subroutine
+
+    subroutine rLiw(rc)
+        implicit none
+        type(RubicCube) :: rc
+        call yi(rc)
+        call rFiw(rc)
         call y(rc)
     end subroutine
 
