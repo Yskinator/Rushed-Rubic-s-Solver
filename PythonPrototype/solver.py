@@ -296,24 +296,25 @@ class Solver:
         rc.x()
         rc.x()
         for i in range(8):
-            positions = Solver.whichToSwitch(rc)
-            if positions == 0:
+            position = Solver.whichToSwitch(rc)
+            if position == 0:
                 pass
-            elif positions == 1:
-                Solver.p4a1(rc)
-            elif positions == 2:
-                Solver.p4a2(rc)
-            elif positions == 3:
-                Solver.p4a1(rc)
-                Solver.p4a2(rc)
-            if i%2 == 0:
+            elif position == 5 or position == 6:
                 rc.y()
-            elif i == 3:
-                rc.y()
-            else:
+                Solver.p4a1(rc)
                 rc.yi()
+            elif position == 1 or position == 5:
+                Solver.p4a1(rc)
+            elif position == 2 or position == 6:
+                Solver.p4a2(rc)
+            elif position == 3:
+                Solver.p4a1(rc)
+                Solver.p4a2(rc)
+            rc.y()
+            
 
     def whichToSwitch(rc):
+        s24 = 0
         s12 = 0
         s34 = 0
         LColor = rc.L[1][1]
@@ -325,9 +326,15 @@ class Solver:
            rc.B[0][2] != LColor and \
            rc.U[0][0] != LColor:
             s34 = 2
-        print(rc)
-        print(s12+s34)
-        return (s12 + s34)
+        if s12 == 1 and rc.R[0][0] != LColor and\
+           rc.F[2][0] != LColor and \
+           rc.U[2][2] != LColor:
+            s24 = 4
+        if s34 == 2 and rc.R[2][0] != LColor and\
+           rc.B[2][2] != LColor and \
+           rc.U[2][0] != LColor:
+            s24 = 4
+        return (s12 + s34 + s24)
 
     def rotateMiddle(rc):
         FColor = rc.F[0][0]
