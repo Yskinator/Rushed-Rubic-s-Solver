@@ -49,6 +49,9 @@ class Solver:
         self.phase6()
         print("Phase 6 completed.")
         print(self._rc)
+        print("Phase 7.")
+        self.phase7()
+        print("Phase 7 completed.")
 
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
@@ -351,6 +354,31 @@ class Solver:
 
         while not Solver.phase6Done(rc):
             Solver.p6a1(rc)
+
+
+    def phase7(self):
+        rc = self._rc
+        for i in range(4):
+            pattern = Solver.findPattern(rc)
+            if pattern == "None":
+                pass
+            elif pattern == "H":
+                Solver.p7a1(rc)
+            elif pattern == "Fish":
+                Solver.p7a2(rc)
+            rc.y()
+        
+
+    def findPattern(rc):
+        UColor = rc.U[1][1]
+        if rc.U[0][1] != UColor and \
+           rc.U[2][1] != UColor:
+            return "H"
+        elif rc.U[2][1] != UColor and \
+             rc.U[1][2] != UColor:
+            return "Fish"
+        else:
+            return "None"
 
 
     def phase6Done(rc):
@@ -691,3 +719,47 @@ class Solver:
         rc.rMi()
         rc.rUi()
         rc.rM()
+
+    def p7a1(rc):
+        rc.rRi()
+        rc.rEi()
+        rc.rRi()
+        rc.rRi()
+        rc.rEi()
+        rc.rEi()
+        rc.rRi()
+        rc.rUi()
+        rc.rUi()
+        rc.rR()
+        rc.rE()
+        rc.rE()
+        rc.rRi()
+        rc.rRi()
+        rc.rE()
+        rc.rR()
+        rc.rUi()
+        rc.rUi()
+
+    def p7a2(rc):
+        rc.rFi()
+        rc.rLi()
+        rc.rRi()
+        rc.rEi()
+        rc.rRi()
+        rc.rRi()
+        rc.rEi()
+        rc.rEi()
+        rc.rRi()
+        rc.rUi()
+        rc.rUi()
+        rc.rR()
+        rc.rE()
+        rc.rE()
+        rc.rRi()
+        rc.rRi()
+        rc.rE()
+        rc.rR()
+        rc.rUi()
+        rc.rUi()
+        rc.rL()
+        rc.rF()
