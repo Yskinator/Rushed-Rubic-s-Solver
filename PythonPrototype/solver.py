@@ -108,20 +108,20 @@ class Solver:
         rc = self._rc
         color = rc.F[1][1]
         if rc.F[2][2] == color:
-            rc.x()
+            self._ui.do("x")
             return True
         elif rc.F[2][0] == color:
-            rc.z()
-            rc.x()
+            self._ui.do("z")
+            self._ui.do("x")
             return True
         elif rc.F[0][2] == color:
-            rc.zi()
-            rc.x()
+            self._ui.do("zi")
+            self._ui.do("x")
             return True
         elif rc.F[0][0] == color:
-            rc.z()
-            rc.z()
-            rc.x()
+            self._ui.do("z")
+            self._ui.do("z")
+            self._ui.do("x")
             return True
         else:
             return False
@@ -130,20 +130,20 @@ class Solver:
         rc = self._rc
         color = rc.L[1][1]
         if rc.L[2][0] == color:
-            rc.z()
+            self._ui.do("z")
             return True
         elif rc.L[0][0] == color:
-            rc.xi()
-            rc.z()
+            self._ui.do("xi")
+            self._ui.do("z")
             return True
         elif rc.L[2][2] == color:
-            rc.x()
-            rc.z()
+            self._ui.do("x")
+            self._ui.do("z")
             return True
         elif rc.L[0][2] == color:
-            rc.x()
-            rc.x()
-            rc.z()
+            self._ui.do("x")
+            self._ui.do("x")
+            self._ui.do("z")
             return True
         else:
             return False
@@ -152,20 +152,20 @@ class Solver:
         rc = self._rc
         color = rc.R[1][1]
         if rc.R[0][2] == color:
-            rc.zi()
+            self._ui.do("zi")
             return True
         elif rc.R[2][2] == color:
-            rc.x()
-            rc.zi()
+            self._ui.do("x")
+            self._ui.do("zi")
             return True
         elif rc.R[0][0] == color:
-            rc.xi()
-            rc.zi()
+            self._ui.do("xi")
+            self._ui.do("zi")
             return True
         elif rc.R[2][0] == color:
-            rc.x()
-            rc.x()
-            rc.zi()
+            self._ui.do("x")
+            self._ui.do("x")
+            self._ui.do("zi")
             return True
         else:
             return False
@@ -175,20 +175,20 @@ class Solver:
         rc = self._rc
         color = rc.B[1][1]
         if rc.B[2][2] == color:
-            rc.xi()
+            self._ui.do("xi")
             return True
         elif rc.B[2][0] == color:
-            rc.zi()
-            rc.xi()
+            self._ui.do("zi")
+            self._ui.do("xi")
             return True
         elif rc.B[0][2] == color:
-            rc.z()
-            rc.xi()
+            self._ui.do("z")
+            self._ui.do("xi")
             return True
         elif rc.B[0][0] == color:
-            rc.z()
-            rc.z()
-            rc.xi()
+            self._ui.do("z")
+            self._ui.do("z")
+            self._ui.do("xi")
             return True
         else:
             return False
@@ -198,24 +198,24 @@ class Solver:
         rc = self._rc
         color = rc.D[1][1]
         if rc.D[2][2] == color:
-            rc.x()
-            rc.x()
+            self._ui.do("x")
+            self._ui.do("x")
             return True
         elif rc.D[2][0] == color:
             self._ui.do("yi")
-            rc.x()
-            rc.x()
+            self._ui.do("x")
+            self._ui.do("x")
             return True
         elif rc.D[0][2] == color:
             self._ui.do("y")
-            rc.x()
-            rc.x()
+            self._ui.do("x")
+            self._ui.do("x")
             return True
         elif rc.D[0][0] == color:
             self._ui.do("y")
             self._ui.do("y")
-            rc.x()
-            rc.x()
+            self._ui.do("x")
+            self._ui.do("x")
             return True
         else:
             return False
@@ -313,8 +313,8 @@ class Solver:
 
     def phase4(self):
         rc = self._rc
-        rc.x()
-        rc.x()
+        self._ui.do("x")
+        self._ui.do("x")
         for i in range(2):
             position = Solver.whichToSwitch(rc)
             if position == 0:
