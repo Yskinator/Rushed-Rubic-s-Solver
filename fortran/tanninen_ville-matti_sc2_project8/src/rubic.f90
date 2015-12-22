@@ -68,14 +68,13 @@ contains
     function rFace(face)
         implicit none
         character(len=1),dimension(3,3) :: rFace
-        character(len=1),dimension(3,3),intent(in) :: face
-        integer :: i, j
+        character(len=1),dimension(3,3) :: face
+        integer :: x, y
         rFace = face
-        do i=1, 3
-            do j=1, 3
-                rFace(j,i) = face(i, j)
+        do y=1, 3
+            do x=1, 3
+                rFace(x,y) = face(y, 4-x)
             end do
-            rFace(i,1:3) = rFace(i,3:1:-1)
         end do
     end function
 
@@ -84,7 +83,7 @@ contains
     function rFacei(face)
         implicit none
         character(len=1),dimension(3,3) :: rFacei
-        character(len=1),dimension(3,3),intent(in) :: face
+        character(len=1),dimension(3,3) :: face
         rFacei = rFace(face)
         rFacei = rFace(rFacei)
         rFacei = rFace(rFacei)
@@ -185,12 +184,23 @@ contains
         implicit none
         character(len=1),dimension(3) :: temp
         type(RubicCube) :: rc
+        integer :: i
         rc%F = rFace(rc%F)
-        temp = rc%U(1:3, 3)
-        rc%U(1:3, 3) = rc%L(3, 3:1:-1)
-        rc%L(3, 3:1:-1) = rc%D(1:3, 1)
-        rc%D(1:3, 1) = rc%R(1, 3:1:-1)
-        rc%R(1, 1:3) = temp
+        do i=1,3
+            temp(i) = rc%U(i, 3)
+        end do
+        do i=1,3
+            rc%U(i, 3) = rc%L(3, 4-i)
+        end do
+        do i=1,3
+            rc%L(3, i) = rc%D(i, 1)
+        end do
+        do i=1,3
+            rc%D(i, 1) = rc%R(1, 4-i)
+        end do
+        do i=1,3
+            rc%R(1, i) = temp(i)
+        end do
     end subroutine
 
     subroutine rFi(rc)
@@ -205,6 +215,7 @@ contains
         implicit none
         character(len=1),dimension(3) :: temp
         type(RubicCube) :: rc
+        integer :: i
         call rF(rc)
         temp = rc%U(1:3, 2)
         rc%U(1:3, 2) = rc%L(2, 3:1:-1)
@@ -232,7 +243,7 @@ contains
     subroutine rLi(rc)
         implicit none
         type(RubicCube) :: rc
-        call y(rc)
+        call yi(rc)
         call rFi(rc)
         call y(rc)
     end subroutine
@@ -246,14 +257,6 @@ contains
     end subroutine
 
     subroutine rLiw(rc)
-        implicit none
-        type(RubicCube) :: rc
-        call yi(rc)
-        call rFiw(rc)
-        call y(rc)
-    end subroutine
-
-    subroutine rLi2(rc)
         implicit none
         type(RubicCube) :: rc
         call yi(rc)
