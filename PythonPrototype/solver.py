@@ -10,7 +10,7 @@ class Solver:
               "U", "Ui", "Uw", "Uiw", \
               "D", "Di", "Dw", "Diw", \
               "B", "Bi", "Bw", "Biw", \
-              "E", "Ei", "rM", "Mi", \
+              "E", "Ei", "M", "Mi", \
               "S", "Si"]
         
 
