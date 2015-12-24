@@ -2,6 +2,7 @@
 from rubic import Cube as RC
 from solver import Solver
 import time
+import sys
 
 class Cli:
     _rc = False
@@ -9,6 +10,7 @@ class Cli:
     _continue = True
     _waitTime = 0.1
     _moveCount = 0
+    _maxMoves = 500
 
     _moves = {"F": RC.rF, "Fi": RC.rFi, \
               "Fw": RC.rFw, "Fiw": RC.rFiw, \
@@ -39,6 +41,9 @@ class Cli:
             print("Current cube:")
             cli.display()
             cli.chooseAction()
+        #To avoid continuing from where solving
+        #an unsolveable cube was aborted earlier.
+        exit()
 
     def chooseAction(self):
         print("Please choose what to do next.")
@@ -47,7 +52,8 @@ class Cli:
         print("3. Explain possible moves")
         print("4. Solve the cube")
         print("5. Set move delay")
-        print("6. Quit")
+        print("6. Manually arrange a cube")
+        print("7. Quit")
         choice = input("Choice: ")
 
         if choice == "1":
@@ -61,9 +67,66 @@ class Cli:
         elif choice == "5":
             cli.setDelay()
         elif choice == "6":
+            cli.arrangeCube()
+        elif choice == "7":
             cli._continue = False
         else:
             print("Please enter a valid number.")
+
+    def arrangeCube(self):
+        self.explainCubeCreation()
+        if self.reverted():
+            return
+        print("Side F")
+        side = self.takeCubeSide()
+        self._rc.setSide("F", side)
+        print("Side U")
+        self._rc.setSide("U", self.takeCubeSide())
+        print("Side D")
+        self._rc.setSide("D", self.takeCubeSide())
+        print("Side L")
+        self._rc.setSide("L", self.takeCubeSide())
+        print("Side R")
+        self._rc.setSide("R", self.takeCubeSide())
+        print("Side B")
+        self._rc.setSide("B", self.takeCubeSide())
+        
+
+    def reverted(self):
+        print("Would you like to revert to default or type in a custom cube configuration? Default 1.")
+        print("1. Revert to the default cube.")
+        print("2. Create a new cube.")
+        choice = input("Choice: ")
+        if choice == "1":
+             self.revertToDefault()
+             return True
+        elif choice == "2":
+            return False
+        else:
+            self.revertToDefault()
+            return True
+
+    def explainCubeCreation(self):
+        print("Here you can manually enter the colors for a cube in order to simulate and solve an existing physical cube.")
+        print("Sides are typed one row at a time, with cubicles separated by spaces.")
+        print("For example, an all 'red' side could be given as")
+        print("R R R")
+        print("R R R")
+        print("R R R")
+        print("")
+
+    def takeCubeSide(self):
+        side = [[str(x)+str(y) for x in range(3)] for y in range(3)]
+        for j in range(3):
+            row = input("Please enter a row: ")
+            try:
+                row = row.split()
+                for i in range(3):
+                    side[i][j] = row[i]
+            except Exception:
+                print("Invalid row. Restarting side.")
+                return self.takeCubeSide()
+        return side
 
     def setDelay(self):
         delay = input("Delay in seconds: ")
@@ -72,6 +135,9 @@ class Cli:
             self._waitTime = delay
         except ValueError:
             print("Invalid value. No changes.")
+
+    def revertToDefault(self):
+        self._rc = RC()
 
     def randomize(self):
         print("Please choose the number of random moves. Default 100.")
@@ -103,11 +169,22 @@ class Cli:
             print("Invalid move.")
 
     def do(self,move):
+        if self._moveCount >= self._maxMoves:
+            print("Exceeded move count limit.")
+            #An ugly hack, but does the job.
+            #Recursion + exit() at the end to
+            #avoid continuing where we left off.
+            self.declareUnsolveable()
         print("Executing move " + move)
         self.execute(move)
         print("Current status:")
         print(self._rc)
         time.sleep(self._waitTime)
+
+    def declareUnsolveable(self):
+        print("The cube is unsolveable.")
+        print("Restarting...")
+        self.doCliThings()
 
     def show(self, message):
         print(message)

@@ -376,6 +376,26 @@ class Solver:
             elif pattern == "Fish":
                 self.p7a2()
             self._ui.do("y")
+        if not self.solved(rc):
+            self._ui.declareUnsolveable()
+
+    def solved(self, rc):
+         FColor = rc.F[0][0]
+         UColor = rc.U[0][0]
+         DColor = rc.D[0][0]
+         LColor = rc.L[0][0]
+         RColor = rc.R[0][0]
+         BColor = rc.B[0][0]
+         for j in range(3):
+             for i in range(3):
+                 if rc.F[i][j] != FColor or \
+                    rc.U[i][j] != UColor or \
+                    rc.D[i][j] != DColor or \
+                    rc.L[i][j] != LColor or \
+                    rc.R[i][j] != RColor or \
+                    rc.B[i][j] != BColor:
+                     return False
+         return True
         
 
     def findPattern(rc):

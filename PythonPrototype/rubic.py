@@ -7,6 +7,7 @@ class Cube:
     D = [["B" for x in range(3)] for y in range(3)]
     B = [["O" for x in range(3)] for y in range(3)]
 
+
     def __str__(self):
         indentation = "       "
         s = ""
@@ -44,6 +45,20 @@ class Cube:
 
         return s
 
+
+    def setSide(self, sideName, side):
+        if sideName == "F":
+            self.F = side
+        elif sideName == "L":
+            self.L = side
+        elif sideName == "R":
+            self.R = side
+        elif sideName == "U":
+            self.U = side
+        elif sideName == "D":
+            self.D = side
+        elif sideName == "B":
+            self.B = side
 
 
     #Rotates a face of the cube - and only
