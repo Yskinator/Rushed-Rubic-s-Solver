@@ -78,7 +78,7 @@ class Solver:
             return
         elif self.DCorner():
             return
-        self.randomize(self._rc, 10, True)
+        self.randomize(10, True)
         self.primeCube()
         return
 
