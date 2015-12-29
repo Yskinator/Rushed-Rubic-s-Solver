@@ -62,6 +62,14 @@ class Solver:
         self.phase7()
         self._ui.show("Phase 7 completed.")
 
+    #An alternate highly efficient solving algorithm inspired by bogosort.
+    def bogosolve(self, rc, ui):
+        self._rc = rc
+        self._ui = ui
+        while not self.solved(rc):
+            self.randomize(50)
+            ui.show(rc)
+
     #Pick a corner that's the same color as the
     #center of the face it is on. Rotate cube so
     #that it is the bottom right corner of U.

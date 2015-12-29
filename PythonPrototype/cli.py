@@ -70,6 +70,9 @@ class Cli:
             cli.arrangeCube()
         elif choice == "7":
             cli._continue = False
+        elif choice == "8":
+            #The secret highly efficient bogosolve algorithm
+            cli.bogosolve()
         else:
             print("Please enter a valid number.")
 
@@ -191,6 +194,13 @@ class Cli:
 
     def listMoves(self):
         print("Possible moves: " + str(cli._moves.keys()))
+
+    def bogosolve(self):
+        print("Congratulations! You have unlocked the secret highly efficient bogosolve algorithm!")
+        print("Have fun!")
+        time.sleep(5)
+        self._solver.bogosolve(cli._rc, self)
+        print("All done! Total moves:" + self._moveCount)
 
     def explainMoves(self):
         print("The cube has six faces.")
