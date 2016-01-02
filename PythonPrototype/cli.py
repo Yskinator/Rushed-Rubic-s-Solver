@@ -200,7 +200,7 @@ class Cli:
         print("Have fun!")
         time.sleep(5)
         self._solver.bogosolve(cli._rc, self)
-        print("All done! Total moves:" + self._moveCount)
+        print("All done! Total moves:" + str(self._moveCount))
 
     def explainMoves(self):
         print("The cube has six faces.")
